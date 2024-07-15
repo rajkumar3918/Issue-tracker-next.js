@@ -67,6 +67,12 @@ const IssueForm = ({ issue }: { issue?: Issue }) => {
           )}
         />
         <ErrorMessage>{errors.description?.message}</ErrorMessage>
+        <select {...register('status')} name='status' defaultValue={issue?.status || 'OPEN'}>
+          <option value="OPEN">Open</option>
+          <option value="IN_PROGRESS">In Progress</option>
+          <option value="CLOSED">Closed</option>
+        </select>
+        <ErrorMessage>{errors.status?.message}</ErrorMessage>
         <Button disabled={isSubmitting}>
           {issue ? 'Update Issue' : 'Submit New Issue'}{' '}
           {isSubmitting && <Spinner />}

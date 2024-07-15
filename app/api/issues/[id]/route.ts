@@ -1,6 +1,7 @@
 import authOptions from "@/app/auth/authOptions";
 import { patchIssueSchema } from "@/app/validationSchemas";
 import prisma from "@/prisma/client";
+import { Status } from "@prisma/client";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -18,7 +19,7 @@ export async function PATCH(
       status: 400,
     });
 
-  const { assignedToUserId, title, description } = body;
+  const { assignedToUserId, title, description, status } = body;
 
   if (assignedToUserId) {
     const user = await prisma.user.findUnique({
@@ -45,7 +46,8 @@ export async function PATCH(
     data: {
       title,
       description,
-      assignedToUserId
+      status: status as Status,
+      assignedToUserId,
     },
   });
 
